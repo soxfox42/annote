@@ -47,11 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        val db = Database.connection
-
-        db.commit()
-        db.close()
-
+        Database.connection.close()
         super.onDestroy()
     }
 
