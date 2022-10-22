@@ -3,6 +3,7 @@ package me.soxfox.annote
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
+import androidx.activity.addCallback
 import org.dizitart.no2.NitriteId
 
 class EditActivity : AppCompatActivity() {
@@ -20,5 +21,13 @@ class EditActivity : AppCompatActivity() {
         val note = notes.getById(id)
 
         title.setText(note.get("title") as? String)
+
+        // Listen for back press
+        onBackPressedDispatcher.addCallback(this) {
+            note["title"] = title.text.toString()
+            notes.update(note)
+            finish()
+        }
+
     }
 }

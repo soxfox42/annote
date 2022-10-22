@@ -22,9 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         // Update note list
         val notesList = findViewById<RecyclerView>(R.id.notesList)
-        notesList.adapter = NotesAdapter(notes)
         notesList.layoutManager = LinearLayoutManager(this)
-
 
         // Listen for FAB press
         val fab = findViewById<FloatingActionButton>(R.id.add_note)
@@ -36,6 +34,18 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("id", newNote.id)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Fetch notes
+        val db = Database.connection
+        val notes = db.getCollection("notes")
+
+        // Update note list
+        val notesList = findViewById<RecyclerView>(R.id.notesList)
+        notesList.adapter = NotesAdapter(notes)
     }
 
     override fun onDestroy() {
