@@ -2,12 +2,18 @@ package me.soxfox.annote
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.EditText
 import androidx.activity.addCallback
+import org.dizitart.no2.Document
+import org.dizitart.no2.NitriteCollection
 import org.dizitart.no2.NitriteId
 
 class EditActivity : AppCompatActivity() {
-    val title by lazy { findViewById<EditText>(R.id.title) }
+    private val title by lazy { findViewById<EditText>(R.id.title) }
+    private lateinit var notes: NitriteCollection
+    private lateinit var note: Document
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,10 +21,10 @@ class EditActivity : AppCompatActivity() {
 
         // Fetch notes
         val db = Database.connection
-        val notes = db.getCollection("notes")
+        notes = db.getCollection("notes")
 
         val id = intent.getSerializableExtraCompat<NitriteId>("id")
-        val note = notes.getById(id)
+        note = notes.getById(id)
 
         val noteTitle = note["title"] as? String
         title.setText(noteTitle)
@@ -30,6 +36,19 @@ class EditActivity : AppCompatActivity() {
             notes.update(note)
             finish()
         }
-
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.edit, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+            R.id.delete_note -> {
+                notes.remove(note)
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
 }
