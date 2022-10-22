@@ -1,10 +1,12 @@
 package me.soxfox.annote
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import org.dizitart.no2.Nitrite
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.dizitart.no2.Document.createDocument
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,10 +14,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Open db connection
-        val db = Nitrite.builder()
-            .compressed()
-            .filePath(filesDir.path + "/annote.db")
-            .openOrCreate()
+        Database.open(filesDir.path + "/annote.db")
+        val db = Database.connection
 
         // Fetch notes
         val notes = db.getCollection("notes")
@@ -24,5 +24,17 @@ class MainActivity : AppCompatActivity() {
         val notesList = findViewById<RecyclerView>(R.id.notesList)
         notesList.adapter = NotesAdapter(notes)
         notesList.layoutManager = LinearLayoutManager(this)
+
+
+        // Listen for FAB press
+        val fab = findViewById<FloatingActionButton>(R.id.add_note)
+        fab.setOnClickListener {
+            val newNote = createDocument("title", "Untitled Note")
+            notes.insert(newNote)
+
+            val intent = Intent(this, EditActivity::class.java)
+            intent.putExtra("id", newNote.id)
+            startActivity(intent)
+        }
     }
 }
