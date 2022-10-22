@@ -44,11 +44,16 @@ class EditActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-            R.id.delete_note -> {
-                notes.remove(note)
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+        R.id.save_note -> {
+            notes.update(note)
+            finish()
+            true
         }
+        R.id.delete_note -> {
+            notes.remove(note)
+            finish()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
 }

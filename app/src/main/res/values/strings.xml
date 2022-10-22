@@ -4,4 +4,5 @@
     <string name="note_title">Note Title</string>
     <string name="editing">Editing %s</string>
     <string name="delete_note">Delete Note</string>
+    <string name="save_note">Save Note</string>
 </resources>

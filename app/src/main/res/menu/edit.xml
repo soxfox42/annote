@@ -3,8 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/save_note"
+        android:icon="@drawable/ic_baseline_save_24"
+        android:title="@string/save_note"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/delete_note"
         android:icon="@drawable/ic_baseline_delete_24"
         android:title="@string/delete_note"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>
