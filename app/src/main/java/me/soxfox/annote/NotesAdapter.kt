@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.dizitart.no2.Document
 import org.dizitart.no2.NitriteCollection
 
-class NotesAdapter(notes: NitriteCollection) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+class NotesAdapter(notes: NitriteCollection, private val onClick: (Document) -> Unit) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
     private val notes = notes.find().toList()
 
     override fun getItemCount(): Int = notes.count()
@@ -23,10 +23,11 @@ class NotesAdapter(notes: NitriteCollection) : RecyclerView.Adapter<NotesAdapter
         holder.bind(notes[position])
     }
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    inner class ViewHolder(private val v: View) : RecyclerView.ViewHolder(v) {
         private val titleView = v.findViewById<TextView>(R.id.title)
 
         fun bind(note: Document) {
+            v.setOnClickListener { onClick(note) }
             titleView.text = note.get("title") as? String
         }
     }

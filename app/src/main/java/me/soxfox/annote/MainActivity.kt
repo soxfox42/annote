@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.dizitart.no2.Document
 import org.dizitart.no2.Document.createDocument
 
 class MainActivity : AppCompatActivity() {
@@ -29,10 +30,7 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             val newNote = createDocument("title", "Untitled Note")
             notes.insert(newNote)
-
-            val intent = Intent(this, EditActivity::class.java)
-            intent.putExtra("id", newNote.id)
-            startActivity(intent)
+            openNote(newNote)
         }
     }
 
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         // Update note list
         val notesList = findViewById<RecyclerView>(R.id.notesList)
-        notesList.adapter = NotesAdapter(notes)
+        notesList.adapter = NotesAdapter(notes, ::openNote)
     }
 
     override fun onDestroy() {
@@ -55,5 +53,11 @@ class MainActivity : AppCompatActivity() {
         db.close()
 
         super.onDestroy()
+    }
+
+    fun openNote(note: Document) {
+        val intent = Intent(this, EditActivity::class.java)
+        intent.putExtra("id", note.id)
+        startActivity(intent)
     }
 }
