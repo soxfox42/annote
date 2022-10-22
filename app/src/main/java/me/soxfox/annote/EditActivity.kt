@@ -20,7 +20,9 @@ class EditActivity : AppCompatActivity() {
         val id = intent.getSerializableExtraCompat<NitriteId>("id")
         val note = notes.getById(id)
 
-        title.setText(note.get("title") as? String)
+        val noteTitle = note["title"] as? String
+        title.setText(noteTitle)
+        setTitle(String.format(getString(R.string.editing), noteTitle))
 
         // Listen for back press
         onBackPressedDispatcher.addCallback(this) {
