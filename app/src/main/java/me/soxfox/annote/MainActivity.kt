@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         // Update note list
         val notesList = findViewById<RecyclerView>(R.id.notesList)
-        notesList.adapter = NotesAdapter(notes, ::openNote)
+        notesList.adapter = NotesAdapter(notes.find(), ::openNote)
     }
 
     override fun onDestroy() {

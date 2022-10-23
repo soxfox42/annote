@@ -5,13 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import org.dizitart.no2.Document
-import org.dizitart.no2.FindOptions
-import org.dizitart.no2.NitriteCollection
-import org.dizitart.no2.SortOrder
+import org.dizitart.no2.*
 
-class NotesAdapter(notes: NitriteCollection, private val onClick: (Document) -> Unit) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
-    private val notes = notes.find(FindOptions.sort("title", SortOrder.Ascending)).toList()
+class NotesAdapter(notes: Cursor, private val onClick: (Document) -> Unit) :
+    RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+    private val notes = notes.sortedBy { it["title"] as? String }.toList()
 
     override fun getItemCount(): Int = notes.count()
 
