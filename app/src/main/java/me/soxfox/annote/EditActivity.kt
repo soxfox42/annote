@@ -56,6 +56,20 @@ class EditActivity : AppCompatActivity() {
         content.setText(note["content"] as? String)
 
         // Fill custom fields
+        for (pair in note) {
+            if (pair.key[0] == '_' || pair.key == "title" || pair.key == "content") continue
+            val row = layoutInflater.inflate(R.layout.row_attr, attrs, false)
+            val delete = row.findViewById<ImageButton>(R.id.delete)
+            delete.setOnClickListener {
+                attrs.removeView(row)
+                fields.remove(row)
+            }
+            attrs.addView(row, attrs.childCount - 1)
+            fields.add(row as TableRow)
+
+            row.findViewById<EditText>(R.id.key).setText(pair.key)
+            row.findViewById<EditText>(R.id.value).setText(pair.value as? String)
+        }
 
         // Listen for toggle attributes
         toggleAttrs.setOnClickListener {
@@ -106,8 +120,18 @@ class EditActivity : AppCompatActivity() {
     }
 
     private fun save() {
+        // Remove all attributes, just saving the currently present ones
+        val keys = note.keys.filter { it[0] != '_' }.toList()
+        keys.forEach { note.remove(it) }
         note["title"] = title.text.toString()
         note["content"] = content.text.toString()
+        fields.forEach {
+            val key = it.findViewById<EditText>(R.id.key).text.toString()
+            val value = it.findViewById<EditText>(R.id.value).text.toString()
+            if (key != "title" && key != "content") {
+                note[key] = value
+            }
+        }
         notes.update(note)
     }
 }
