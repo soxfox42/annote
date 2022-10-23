@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import androidx.activity.addCallback
+import androidx.core.widget.addTextChangedListener
 import org.dizitart.no2.Document
 import org.dizitart.no2.NitriteCollection
 import org.dizitart.no2.NitriteId
@@ -31,6 +32,14 @@ class EditActivity : AppCompatActivity() {
         val noteTitle = note["title"] as? String
         title.setText(noteTitle)
         setTitle(String.format(getString(R.string.editing), noteTitle))
+        title.addTextChangedListener {
+            if (it == null) return@addTextChangedListener
+            if (it.isEmpty()) {
+                setTitle(getString(R.string.editing_untitled))
+            } else {
+                setTitle(String.format(getString(R.string.editing), it.toString()))
+            }
+        }
 
         content.setText(note["content"] as? String)
 
