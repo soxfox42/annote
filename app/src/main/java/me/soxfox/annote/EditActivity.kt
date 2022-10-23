@@ -57,7 +57,7 @@ class EditActivity : AppCompatActivity() {
 
         // Fill custom fields
         for (pair in note) {
-            if (pair.key[0] == '_' || pair.key == "title" || pair.key == "content") continue
+            if (!validKey(pair.key)) continue
             val row = layoutInflater.inflate(R.layout.row_attr, attrs, false)
             val delete = row.findViewById<ImageButton>(R.id.delete)
             delete.setOnClickListener {
@@ -121,17 +121,20 @@ class EditActivity : AppCompatActivity() {
 
     private fun save() {
         // Remove all attributes, just saving the currently present ones
-        val keys = note.keys.filter { it[0] != '_' }.toList()
+        val keys = note.keys.filter { it.isNotEmpty() && it[0] != '_' }.toList()
         keys.forEach { note.remove(it) }
         note["title"] = title.text.toString()
         note["content"] = content.text.toString()
         fields.forEach {
             val key = it.findViewById<EditText>(R.id.key).text.toString()
             val value = it.findViewById<EditText>(R.id.value).text.toString()
-            if (key != "title" && key != "content") {
+            if (validKey(key)) {
                 note[key] = value
             }
         }
         notes.update(note)
     }
+
+    private fun validKey(key: String): Boolean =
+        !(key.isEmpty() || key[0] == '_' || key == "title" || key == "content")
 }
