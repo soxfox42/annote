@@ -10,4 +10,7 @@
     <string name="expand_attrs">Expand Attributes</string>
     <string name="add_attr">Add Attribute</string>
     <string name="content_hint">Tap here to start writing…</string>
+    <string name="name">Name</string>
+    <string name="value">Value</string>
+    <string name="delete_attr">Delete Attribute</string>
 </resources>

@@ -48,7 +48,7 @@
             android:id="@+id/attrs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:stretchColumns="*"
+            android:stretchColumns="0,1"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +64,7 @@
                     android:id="@+id/add_attr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_span="3"
                     android:text="@string/add_attr"
                     tools:ignore="TextContrastCheck" />
             </TableRow>
