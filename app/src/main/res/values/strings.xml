@@ -9,4 +9,5 @@
     <string name="editing_untitled">Editing Untitled Note</string>
     <string name="expand_attrs">Expand Attributes</string>
     <string name="add_attr">Add Attribute</string>
+    <string name="content_hint">Tap here to start writing…</string>
 </resources>
