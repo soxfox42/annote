@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.TableLayout
 import androidx.activity.addCallback
 import androidx.core.widget.addTextChangedListener
 import org.dizitart.no2.Document
@@ -14,6 +17,8 @@ import org.dizitart.no2.NitriteId
 class EditActivity : AppCompatActivity() {
     private val title by lazy { findViewById<EditText>(R.id.title) }
     private val content by lazy { findViewById<EditText>(R.id.content) }
+    private val toggleAttrs by lazy { findViewById<ImageButton>(R.id.toggle_attrs) }
+    private val attrs by lazy { findViewById<TableLayout>(R.id.attrs) }
 
     private lateinit var notes: NitriteCollection
     private lateinit var note: Document
@@ -26,9 +31,11 @@ class EditActivity : AppCompatActivity() {
         val db = Database.connection
         notes = db.getCollection("notes")
 
+        // Get current note
         val id = intent.getSerializableExtraCompat<NitriteId>("id")
         note = notes.getById(id)
 
+        // Fill note data
         val noteTitle = note["title"] as? String
         title.setText(noteTitle)
         setTitle(String.format(getString(R.string.editing), noteTitle))
@@ -42,6 +49,18 @@ class EditActivity : AppCompatActivity() {
         }
 
         content.setText(note["content"] as? String)
+
+        // Fill custom fields
+
+        // Listen for toggle attributes
+        toggleAttrs.setOnClickListener {
+            it.rotation = 180 - it.rotation
+            if (attrs.visibility == View.GONE) {
+                attrs.visibility = View.VISIBLE
+            } else {
+                attrs.visibility = View.GONE
+            }
+        }
 
         // Listen for back press
         onBackPressedDispatcher.addCallback(this) {
