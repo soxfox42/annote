@@ -12,6 +12,8 @@ import org.dizitart.no2.NitriteId
 
 class EditActivity : AppCompatActivity() {
     private val title by lazy { findViewById<EditText>(R.id.title) }
+    private val content by lazy { findViewById<EditText>(R.id.content) }
+
     private lateinit var notes: NitriteCollection
     private lateinit var note: Document
 
@@ -30,10 +32,11 @@ class EditActivity : AppCompatActivity() {
         title.setText(noteTitle)
         setTitle(String.format(getString(R.string.editing), noteTitle))
 
+        content.setText(note["content"] as? String)
+
         // Listen for back press
         onBackPressedDispatcher.addCallback(this) {
-            note["title"] = title.text.toString()
-            notes.update(note)
+            save()
             finish()
         }
     }
@@ -45,7 +48,7 @@ class EditActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.save_note -> {
-            notes.update(note)
+            save()
             finish()
             true
         }
@@ -55,5 +58,11 @@ class EditActivity : AppCompatActivity() {
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun save() {
+        note["title"] = title.text.toString()
+        note["content"] = content.text.toString()
+        notes.update(note)
     }
 }
