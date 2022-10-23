@@ -3,6 +3,8 @@ package me.soxfox.annote
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -49,6 +51,19 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         Database.connection.close()
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.search -> {
+            // TODO: add search activity
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     fun openNote(note: Document) {
