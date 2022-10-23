@@ -2,7 +2,7 @@
 <resources>
     <color name="primaryColor">#ff7043</color>
     <color name="primaryLightColor">#ffa270</color>
-    <color name="primaryDarkColor">#c63f17</color>
+    <color name="primaryDarkColor">#B13916</color>
     <color name="secondaryColor">#ec407a</color>
     <color name="secondaryLightColor">#ff77a9</color>
     <color name="secondaryDarkColor">#b4004e</color>
