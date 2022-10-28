@@ -15,7 +15,7 @@ class NotesAdapter(notes: Cursor, private val onClick: (Document) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.layout_row_note, parent, false)
+        val view = inflater.inflate(R.layout.row_note, parent, false)
         return ViewHolder(view)
     }
 
