@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
-    fun openNote(note: Document) {
+    private fun openNote(note: Document) {
         val intent = Intent(this, EditActivity::class.java)
         intent.putExtra("id", note.id)
         startActivity(intent)
