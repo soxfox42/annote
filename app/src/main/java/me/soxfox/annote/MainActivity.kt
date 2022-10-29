@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.search -> {
+            // Launch search activity
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
             true
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openNote(note: Document) {
+        // Launch the note editor for a specific document
         val intent = Intent(this, EditActivity::class.java)
         intent.putExtra("id", note.id)
         startActivity(intent)

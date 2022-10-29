@@ -45,6 +45,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun openNote(note: Document) {
+        // Launch the note editor for a specific document
         val intent = Intent(this, EditActivity::class.java)
         intent.putExtra("id", note.id)
         startActivity(intent)

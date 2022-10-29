@@ -10,6 +10,8 @@ enum class FilterMode {
     TEXT, GREATER, LESS, EQUAL,
 }
 
+// Helpers to fetch specified attributes
+
 private fun Document.getIntAttr(key: String): Int? {
     val attrMap = this["attrs"] as? Map<*, *> ?: return null
     val attr = attrMap[key] as? String ?: return null
@@ -21,6 +23,7 @@ private fun Document.getStringAttr(key: String): String? {
     return attrMap[key] as? String
 }
 
+// Custom Nitrite filter implementing a step of an Annote search
 class AnnoteFilter(part: String) : Filter {
     private val filterMode = when {
         !part.contains(':') -> FilterMode.TEXT
@@ -47,14 +50,17 @@ class AnnoteFilter(part: String) : Filter {
                 doc["title"].toString().lowercase().contains(value.lowercase()) ||
                         doc["content"].toString().lowercase().contains(value.lowercase())
             }.map { it.key }.toMutableSet()
+
             FilterMode.GREATER -> documentMap.entrySet().filter { (_, doc) ->
                 doc.getIntAttr(key)?.let { it > (value.toIntOrNull() ?: return@filter false) }
                     ?: false
             }.map { it.key }.toMutableSet()
+
             FilterMode.LESS -> documentMap.entrySet().filter { (_, doc) ->
                 doc.getIntAttr(key)?.let { it < (value.toIntOrNull() ?: return@filter false) }
                     ?: false
             }.map { it.key }.toMutableSet()
+
             FilterMode.EQUAL -> documentMap.entrySet().filter { (_, doc) ->
                 doc.getStringAttr(key)?.let { it.lowercase() == value.lowercase() } ?: false
             }.map { it.key }.toMutableSet()
