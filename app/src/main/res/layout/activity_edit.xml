@@ -10,7 +10,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         tools:context=".EditActivity">
 
 
@@ -18,6 +17,8 @@
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="@string/note_title"
             android:importantForAutofill="no"
@@ -33,6 +34,8 @@
             android:id="@+id/toggle_attrs"
             android:layout_width="48dp"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/expand_attrs"
             app:layout_constraintBottom_toBottomOf="@+id/title"
@@ -47,6 +50,8 @@
             android:id="@+id/attrs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="#F6F6F6"
+            android:padding="8dp"
             android:stretchColumns="0,1"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,6 +81,10 @@
             android:id="@+id/content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            android:background="@android:color/transparent"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/content_hint"
@@ -86,7 +95,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/attrs"
-            tools:text="This is my\nnote" />
+            tools:text="This is my\nnote.\nWow!" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
