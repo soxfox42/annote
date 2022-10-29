@@ -30,7 +30,13 @@ class NotesAdapter(notes: Cursor, private val onClick: (Document) -> Unit) :
         fun bind(note: Document) {
             v.setOnClickListener { onClick(note) }
             titleView.text = note.get("title") as? String
-            snippetView.text = (note.get("content") as? String)?.lines()?.first()
+            val firstLine = (note.get("content") as? String ?: "").lines().first()
+            if (firstLine.isBlank()) {
+                snippetView.visibility = View.GONE
+            } else {
+                snippetView.visibility = View.VISIBLE
+                snippetView.text = firstLine
+            }
         }
     }
 }
