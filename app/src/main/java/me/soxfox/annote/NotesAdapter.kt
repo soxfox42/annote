@@ -25,10 +25,12 @@ class NotesAdapter(notes: Cursor, private val onClick: (Document) -> Unit) :
 
     inner class ViewHolder(private val v: View) : RecyclerView.ViewHolder(v) {
         private val titleView = v.findViewById<TextView>(R.id.title)
+        private val snippetView = v.findViewById<TextView>(R.id.snippet)
 
         fun bind(note: Document) {
             v.setOnClickListener { onClick(note) }
             titleView.text = note.get("title") as? String
+            snippetView.text = (note.get("content") as? String)?.lines()?.first()
         }
     }
 }
